@@ -37,8 +37,8 @@ def compress_video(filename):
     input_path = os.path.join( ruta_intermedia, filename)
     output_path = os.path.join( ruta_intermedia, compressed_filename)
 
-    print("Entrada -> "+input_path)
-    print("Salida -> "+output_path)
+    #print("Entrada -> "+input_path)
+    #print("Salida -> "+output_path)
     result = subprocess.call(['ffmpeg', '-i', input_path, '-vf', 'scale=640:360', '-b:v', '500k', '-vcodec', 'libx264', '-acodec', 'aac', output_path])
     return compressed_filename
 

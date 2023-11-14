@@ -1,7 +1,37 @@
-.card:hover{
-    border-color: dodgerblue;
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-a.car_mod{
-    background-color: black !important;
+body {
+    display: flex;
+    flex-direction: column;
 }
+
+.content {
+    flex: 1; /* Esta clase se aplica a todo el contenido de la página excepto al footer */
+}
+
+.footer {
+    padding-bottom: 50px; /* Ajusta esto según tus necesidades */
+}
+
+.card:hover, .img_mod:hover{
+    border-style: solid;
+    border-color: rgb(23, 95, 53);
+    border-width: 2px;
+}
+
+a.card_mod{
+    text-decoration: none;
+}
+
+.card-text{
+    color: black !important;
+}
+
+.espacio20{
+    clear: both;
+    height: 50px;
+}
+

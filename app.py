@@ -13,8 +13,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/compresor_video', methods=['GET', 'POST'])
+def compresor_video():
     if request.method == 'POST':
         if 'file' not in request.files:
             return redirect(request.url)
@@ -28,7 +32,7 @@ def upload():
             
             compressed_filename = compress_video(filename)
             return send_from_directory(app.config['UPLOAD_FOLDER'], compressed_filename, as_attachment=True)
-    return render_template('index.html')
+    return render_template('compresor_video.html')
 
 def compress_video(filename):
     compressed_filename = f"compressed_{filename}"
@@ -42,9 +46,6 @@ def compress_video(filename):
     result = subprocess.call(['ffmpeg', '-i', input_path, '-vf', 'scale=640:360', '-b:v', '500k', '-vcodec', 'libx264', '-acodec', 'aac', output_path])
     return compressed_filename
 
-@app.route('/')
-def index():
-    return redirect(url_for('upload'))
 
 if __name__ == "__main__":
     if not os.path.exists(UPLOAD_FOLDER):

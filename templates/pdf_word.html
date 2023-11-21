@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PDF a Word</title>
+
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../static/css/dragula.min.css" rel="stylesheet">
+        <link href="../static/css/styles_bootstrap.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="../static/css/fontawesome.min.css">
+        <link rel="stylesheet" href="../static/css/brands.min.css">
+        <link rel="stylesheet" href="../static/css/solid.min.css">
+
+        <link href="../static/css/styles.css" rel="stylesheet">
+        <script src="../static/js/dragula.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="http://localhost:5000">FileTransformer</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Blog</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">PDF a Word</h1>
+                    <p class="lead mb-0">Ahorra espacio comprimiendo tus vídeos de una forma sencilla.</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <h3 class="text-center">Arrastra y Sube un Archivo</h3>
+                    <form method="post" enctype="multipart/form-data" class="border p-3">
+
+                        <div id="dropzone" class="border p-3 text-center bg-light">
+                            Arrastra y suelta tu archivo aquí
+                        </div>
+                        <input type="file" name="file" id="fileInput" style="display: none;">
+                        <!--
+                        <div class="form-group">
+                            <input type="file" name="video" class="form-control-file" required>
+                        </div>-->
+                        <button type="submit" class="btn btn-primary btn-block">Subir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; 2024 FileTransformer</p></div>
+        </footer>
+
+        <script src="../static/js/jquery.min.js"></script>
+        <script src="../static/js/bootstrap.bundle.min.js"></script>
+        <script src="../static/js/dragula_arrastrar.js"></script>
+    
+    </body>
+</html>
+

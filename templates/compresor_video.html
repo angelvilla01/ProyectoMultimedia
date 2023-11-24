@@ -62,13 +62,16 @@
                             Arrastra y suelta tu archivo aquí
                         </div>
                         <input type="file" name="file" id="fileInput" style="display: none;">
-                        <!--
-                        <div class="form-group">
-                            <input type="file" name="video" class="form-control-file" required>
-                        </div>-->
                         <button type="submit" class="btn btn-primary btn-block">Subir</button>
                     </form>
                 </div>
+                <div class="progress">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <br>
+            </div>
+            <div class="row">
+                <button id="downloadButton" style="display: none;" class="btn btn-success">Descargar Archivo Comprimido</button>
             </div>
         </div>
 
@@ -79,7 +82,43 @@
         <script src="../static/js/jquery.min.js"></script>
         <script src="../static/js/bootstrap.bundle.min.js"></script>
         <script src="../static/js/dragula_arrastrar.js"></script>
-    
+
+        <script>
+            $(document).ready(function() {
+                $('form').on('submit', function(event) {
+                    event.preventDefault();
+        
+                    var formData = new FormData(this);
+                    $.ajax({
+                        xhr: function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function(evt) {
+                                if (evt.lengthComputable) {
+                                    var percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    $('#progressBar').css('width', percentComplete + '%');
+                                    $('#progressBar').attr('aria-valuenow', percentComplete);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        type: 'POST',
+                        url: '/compresor_video',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            // Acciones a realizar cuando la carga y procesamiento estén completos
+                            $('#progressBar').css('width', '100%').delay(500).fadeOut();
+                            
+                            $('#downloadButton').show().click(function() {
+                                window.location.href = response.fileUrl;
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
 

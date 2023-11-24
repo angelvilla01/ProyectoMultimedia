@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory, render_template, redirect, url_for
+from flask import Flask, jsonify, request, send_from_directory, render_template, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
 import subprocess
@@ -7,11 +7,12 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas 
 from PIL import Image
 
+import utilities as util
+
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'flv', 'mkv', 'pdf'}
-
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -21,33 +22,22 @@ def allowed_file(filename):
 def index():
     return render_template('index.html')
 
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    #return send_from_directory(UPLOAD_FOLDER, filename) (con esto veríamos el fichero)
+    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True) #descarga..
+
 #------------Compresor de vídeo--------------------
 @app.route('/compresor_video', methods=['GET', 'POST'])
 def compresor_video():
     if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-            
-            compressed_filename = compress_video(filename)
-            return send_from_directory(app.config['UPLOAD_FOLDER'], compressed_filename, as_attachment=True)
+        file = request.files.get('file')
+        if file:
+            compressed_filename = util.upload_to_server(file, 0)
+            if compressed_filename:
+                file_url = url_for('uploaded_file', filename=compressed_filename)
+                return jsonify({'fileUrl': file_url})
     return render_template('compresor_video.html')
-
-def compress_video(filename):
-    compressed_filename = f"compressed_{filename}"
-    ruta_intermedia = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
-
-    input_path = os.path.join( ruta_intermedia, filename)
-    output_path = os.path.join( ruta_intermedia, compressed_filename)
-
-    result = subprocess.call(['ffmpeg', '-i', input_path, '-vf', 'scale=640:360', '-b:v', '500k', '-vcodec', 'libx264', '-acodec', 'aac', output_path])
-    return compressed_filename
 
 #------------PDF A WORD--------------------
 @app.route('/pdf_a_word', methods=['GET', 'POST'])

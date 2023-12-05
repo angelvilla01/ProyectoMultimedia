@@ -1,8 +1,5 @@
 from flask import Flask, jsonify, request, send_from_directory, render_template, redirect, url_for
 import os
-from werkzeug.utils import secure_filename
-import subprocess
-from pdf2docx import Converter
 from reportlab.lib.pagesizes import letter 
 from reportlab.pdfgen import canvas 
 from PIL import Image
@@ -12,11 +9,8 @@ import utilities as util
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'flv', 'mkv', 'pdf'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 def index():
@@ -43,34 +37,13 @@ def compresor_video():
 @app.route('/pdf_a_word', methods=['GET', 'POST'])
 def pdf_a_word():
     if request.method == 'POST':
-        if 'file' not in request.files:
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-            print(filename)
-            
-            word_filename = pdf_to_word(filename)
-            return send_from_directory(app.config['UPLOAD_FOLDER'], word_filename, as_attachment=True)
+        file = request.files.get('file')
+        if file:
+            word_filename = util.upload_to_server(file, 1)
+            if word_filename:
+                file_url = url_for('uploaded_file', filename=word_filename)
+                return jsonify({'fileUrl': file_url})
     return render_template('pdf_word.html')
-
-
-def pdf_to_word(filename):
-    word_filename = f"word_{filename.removesuffix('.pdf')}.docx"
-    ruta_intermedia = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
-
-    input_path = os.path.join( ruta_intermedia, filename)
-    output_path = os.path.join( ruta_intermedia, word_filename)
-
-    cv = Converter(input_path)
-    cv.convert(output_path, start=0, end=None)
-
-    cv.close()
-    return word_filename
 
 #------------JPG a PDF--------------------
 def jpg_to_pdf(jpg_paths, output_path): 

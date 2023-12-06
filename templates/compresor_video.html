@@ -30,13 +30,16 @@
                             <a class="nav-link" href="http://127.0.0.1:5000">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#!">Compresor de Vídeo</a>
+                            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/compresor_video">Compresor de Vídeo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="http://127.0.0.1:5000/pdf_a_word">PDF a Word</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Blog</a>
+                            <a class="nav-link" href="http://127.0.0.1:5000/jpg_a_webp">JPG a WebP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://127.0.0.1:5000/jpg_a_png">JPG a PNG</a>
                         </li>
                     </ul>
                 </div>
@@ -74,10 +77,10 @@
                                 <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
-                        <input type="file" name="file" id="fileInput" class="d-none">
+                        <input type="file" name="file" id="fileInput" class="d-none" accept=".mp4">
                         <br>
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary mr-2 w-50">Subir</button>
+                            <button id="submitBtn" type="submit" class="btn btn-primary mr-2 w-50">Subir</button>
                             <button id="downloadButton" class="btn btn-success w-50" disabled>Descargar archivo</button>
                         </div>
                     </form>

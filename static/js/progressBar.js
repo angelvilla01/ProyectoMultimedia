@@ -1,4 +1,13 @@
 $(document).ready(function() {
+
+    $('#fileInput').change(function() {
+        if ($(this).val()) {
+            $('#submitBtn').prop('disabled', false);
+        } else {
+            $('#submitBtn').prop('disabled', true);
+        }
+    });
+
     $('form').on('submit', function(event) {
         event.preventDefault();
 
@@ -29,13 +38,12 @@ $(document).ready(function() {
                 $('#downloadButton').show().click(function() {
                     window.location.href = response.fileUrl;
                 });
-                
+                $('#submitBtn').prop('disabled', true);
                 $('#downloadButton')
                     .show()
                     .prop('disabled', false)
                     .click(function() {
                         window.location.href = response.fileUrl;
-
                         //Tienes 15 segundos para la descarga y luego hacemos reset
                         setTimeout(function() {
                             $('#progressBar').css('width', '0%').attr('aria-valuenow', 0);

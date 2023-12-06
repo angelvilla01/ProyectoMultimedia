@@ -1,9 +1,5 @@
 from flask import Flask, jsonify, request, send_from_directory, render_template, redirect, url_for
 import os
-from reportlab.lib.pagesizes import letter 
-from reportlab.pdfgen import canvas 
-from PIL import Image
-
 import utilities as util
 
 app = Flask(__name__)
@@ -18,8 +14,7 @@ def index():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    #return send_from_directory(UPLOAD_FOLDER, filename) (con esto veríamos el fichero)
-    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True) #descarga..
+    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
 
 #------------Compresor de vídeo--------------------
 @app.route('/compresor_video', methods=['GET', 'POST'])
@@ -27,7 +22,7 @@ def compresor_video():
     if request.method == 'POST':
         file = request.files.get('file')
         if file:
-            compressed_filename = util.upload_to_server(file, 0)
+            compressed_filename = util.upload_to_server(file, 0, "mp4")
             if compressed_filename:
                 file_url = url_for('uploaded_file', filename=compressed_filename)
                 return jsonify({'fileUrl': file_url})
@@ -39,7 +34,7 @@ def pdf_a_word():
     if request.method == 'POST':
         file = request.files.get('file')
         if file:
-            word_filename = util.upload_to_server(file, 1)
+            word_filename = util.upload_to_server(file, 1, "word")
             if word_filename:
                 file_url = url_for('uploaded_file', filename=word_filename)
                 return jsonify({'fileUrl': file_url})
@@ -51,34 +46,23 @@ def jpg_a_webp():
     if request.method == 'POST':
         file = request.files.get('file')
         if file:
-            webp_filename = util.upload_to_server(file, 2)
+            webp_filename = util.upload_to_server(file, 2, "webp")
             if webp_filename:
                 file_url = url_for('uploaded_file', filename=webp_filename)
                 return jsonify({'fileUrl': file_url})
     return render_template('jpg_webp.html')
 
-#------------JPG a PDF--------------------
-def jpg_to_pdf(jpg_paths, output_path): 
-    c = canvas.Canvas(output_path, pagesize=letter) 
- 
-    for jpg_path in jpg_paths: 
-        img = Image.open(jpg_path) 
-        width, height = letter 
-        img_width, img_height = img.size 
- 
-        # Ajustar la imagen al tamaño de la página 
-        aspect_ratio = img_width / img_height 
-        if img_width > img_height: 
-            img_width = width 
-            img_height = width / aspect_ratio 
-        else: 
-            img_height = height 
-            img_width = height * aspect_ratio 
- 
-        c.drawImage(jpg_path, 0, 0, width=img_width, height=img_height) 
-        c.showPage() 
- 
-    c.save()
+#------------Jpg a png--------------------
+@app.route('/jpg_a_png', methods=['GET', 'POST'])
+def jpg_a_png():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            png_filename = util.upload_to_server(file, 3, "png")
+            if png_filename:
+                file_url = url_for('uploaded_file', filename=png_filename)
+                return jsonify({'fileUrl': file_url})
+    return render_template('jpg_png.html')
 
 if __name__ == "__main__":
     if not os.path.exists(UPLOAD_FOLDER):

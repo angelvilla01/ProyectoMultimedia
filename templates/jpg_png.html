@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>JPG a WebP</title>
+        <title>JPG a PNG</title>
 
         <link href="../static/css/bootstrap.min.css" rel="stylesheet">
         <link href="../static/css/dragula.min.css" rel="stylesheet">
@@ -36,10 +36,10 @@
                             <a class="nav-link" href="http://127.0.0.1:5000/pdf_a_word">PDF a Word</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/jpg_a_webp">JPG a WebP</a>
+                            <a class="nav-link" href="http://127.0.0.1:5000/jpg_a_webp">JPG a WebP</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="http://127.0.0.1:5000/jpg_a_png">JPG a PNG</a>
+                            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/jpg_a_png">JPG a PNG</a>
                         </li>
                     </ul>
                 </div>
@@ -49,9 +49,9 @@
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder">JPG a WebP</h1>
-                    <p class="lead mb-0">Obtendrás una imagen con buena calidad y adaptada a la web.</p>
-                    <input id="urlField" value="/jpg_a_webp" style="display: none;">
+                    <h1 class="fw-bolder">JPG a PNG</h1>
+                    <p class="lead mb-0">Optimiza el espacio disminuyendo la calidad.</p>
+                    <input id="urlField" value="/jpg_a_png" style="display: none;">
                 </div>
             </div>
         </header>
@@ -59,10 +59,10 @@
         <div class="container mt-4">
             <div class="row justify-content-center">
                 <div class="col-md-8 text-center">
-                    <img class="img-fluid rounded imgLogoFuncion" src="/static/resources/jpg_webp.png" alt="Imagen de jpg a webP">
+                    <img class="img-fluid rounded imgLogoFuncion" src="/static/resources/jpg_png.png" alt="Imagen de jpg a png">
                     <div class="espacio10"></div>
                     <div class="p-4 border bg-white rounded text-justify">
-                        Mediante el uso de la librería <b>PIL</b> se convierte la imagen <b>JPG</b> a formato <b>WebP</b> permiendo con ello mantener la calidad pero diminuyendo el peso.
+                        Mediante el uso de la librería <b>PIL</b> se convierte la imagen <b>JPG</b> a formato <b>PNG</b> disminuyendo el peso reduciendo la calidad.
                     </div>
                     <div class="espacio10"></div>
                     <form method="post" enctype="multipart/form-data" class="border p-4 mb-3 rounded">
@@ -80,7 +80,7 @@
                         <input type="file" name="file" id="fileInput" class="d-none" accept=".jpg">
                         <br>
                         <div class="d-flex justify-content-center">
-                            <button id="submitBtn" type="submit" class="btn btn-primary mr-2 w-50">Subir</button>
+                            <button id="submitBtn" type="submit" class="btn btn-primary mr-2 w-50" disabled>Subir</button>
                             <button id="downloadButton" class="btn btn-success w-50" disabled>Descargar archivo</button>
                         </div>
                     </form>

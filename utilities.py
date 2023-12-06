@@ -5,7 +5,7 @@ from PIL import Image
 import os
 import subprocess
 
-ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'flv', 'mkv', 'pdf', 'jpg'}
+ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'flv', 'mkv', 'pdf', 'jpg', 'png'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -35,20 +35,21 @@ def pdf_to_word(filename):
     cv.close()
     return word_filename
 
-def jpg_to_webp(filename):
-    webp_filename = f"{filename.removesuffix('.jpg')}.webp"
+
+def convert_file(filename, format):
+    output_filename = f"{filename.removesuffix('.jpg')}."+ format
     ruta_intermedia = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
 
     input_path = os.path.join( ruta_intermedia, filename)
-    output_path = os.path.join( ruta_intermedia, webp_filename)
+    output_path = os.path.join( ruta_intermedia, output_filename)
 
     imagen = Image.open(input_path)
-    imagen.save(output_path, "WEBP")
+    imagen.save(output_path, format)
     
-    return webp_filename
+    return output_filename
 
 
-def upload_to_server(file,option):
+def upload_to_server(file, option, format):
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -60,6 +61,6 @@ def upload_to_server(file,option):
         if option == 1:
             word_filename = pdf_to_word(filename)
             return word_filename
-        if option == 2:
-            webp_filename = jpg_to_webp(filename)
-            return webp_filename
+        if option == 2 or option == 3:
+            out_filename = convert_file(filename,format)
+            return out_filename

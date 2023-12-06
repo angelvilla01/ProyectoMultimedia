@@ -27,16 +27,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Inicio</a>
+                            <a class="nav-link" href="http://127.0.0.1:5000">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#!">About</a>
+                            <a class="nav-link active" aria-current="page" href="#!">Compresor de Vídeo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#!">Contact</a>
+                            <a class="nav-link" href="http://127.0.0.1:5000/pdf_a_word">PDF a Word</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Blog</a>
+                            <a class="nav-link" href="#">Blog</a>
                         </li>
                     </ul>
                 </div>
@@ -48,35 +48,44 @@
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">Compresor de vídeo</h1>
                     <p class="lead mb-0">Ahorra espacio comprimiendo tus vídeos de una forma sencilla.</p>
+                    <input id="urlField" value="/compresor_video" style="display: none;">
                 </div>
             </div>
         </header>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <h3 class="text-center">Arrastra y Sube un Archivo</h3>
-                    <form method="post" enctype="multipart/form-data" class="border p-3">
-
-                        <div id="dropzone" class="border p-3 text-center bg-light">
-                            Arrastra y suelta tu archivo aquí
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <img class="img-fluid rounded imgLogoFuncion" src="/static/resources/compresor_video.png" alt="Imagen de un compresor de vídeo">
+                    <div class="espacio10"></div>
+                    <div class="p-4 border bg-white rounded text-justify">
+                        Para realizar la compresión se hace uso de <b>FFMPEG</b> en un formato de <b>640 x 360</b> píxeles utilizando el codec de vídeo <b>libx264</b> y para el codec de audio <b>AAC</b>. Esto, permite encontrar un equilibrio entre la calidad y el peso.
+                    </div>
+                    <div class="espacio10"></div>
+                    <form method="post" enctype="multipart/form-data" class="border p-4 mb-3 rounded">
+                        <div id="dropzone" class="border p-4 text-center bg-light mb-3 rounded">
+                            <b>Arrastra el fichero o haz click aquí</b>
                         </div>
-                        <input type="file" name="file" id="fileInput" style="display: none;">
-                        <button type="submit" class="btn btn-primary btn-block">Subir</button>
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <div class="mr-2">
+                               <strong>Progreso de conversión :</strong>
+                            </div>
+                            <div class="progress" id="progressContainer">
+                                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <input type="file" name="file" id="fileInput" class="d-none">
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary mr-2 w-50">Subir</button>
+                            <button id="downloadButton" class="btn btn-success w-50" disabled>Descargar archivo</button>
+                        </div>
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="progress">
-                        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <button id="downloadButton" style="display: none;" class="btn btn-success">Descargar Archivo Comprimido</button>
-            </div>
+            <div class="espacio20"></div>
         </div>
+               
 
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; 2024 FileTransformer</p></div>

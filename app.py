@@ -45,6 +45,18 @@ def pdf_a_word():
                 return jsonify({'fileUrl': file_url})
     return render_template('pdf_word.html')
 
+#------------Jpg a Webp--------------------
+@app.route('/jpg_a_webp', methods=['GET', 'POST'])
+def jpg_a_webp():
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if file:
+            webp_filename = util.upload_to_server(file, 2)
+            if webp_filename:
+                file_url = url_for('uploaded_file', filename=webp_filename)
+                return jsonify({'fileUrl': file_url})
+    return render_template('jpg_webp.html')
+
 #------------JPG a PDF--------------------
 def jpg_to_pdf(jpg_paths, output_path): 
     c = canvas.Canvas(output_path, pagesize=letter) 

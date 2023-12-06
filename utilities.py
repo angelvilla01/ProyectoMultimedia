@@ -1,11 +1,11 @@
-from flask import Flask, request, send_from_directory, make_response, redirect, url_for
 from app import app
 from werkzeug.utils import secure_filename
 from pdf2docx import Converter
+from PIL import Image
 import os
 import subprocess
 
-ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'flv', 'mkv', 'pdf'}
+ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'flv', 'mkv', 'pdf', 'jpg'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -18,7 +18,7 @@ def compress_video(filename):
     input_path = os.path.join( ruta_intermedia, filename)
     output_path = os.path.join( ruta_intermedia, compressed_filename)
 
-    result = subprocess.call(['ffmpeg', '-i', input_path, '-vf', 'scale=640:360', '-b:v', '500k', '-vcodec', 'libx264', '-acodec', 'aac', output_path])
+    result = subprocess.call(['ffmpeg', '-y', '-i', input_path, '-vf', 'scale=640:360', '-b:v', '500k', '-vcodec', 'libx264', '-acodec', 'aac', output_path])
     return compressed_filename
 
 
@@ -35,6 +35,18 @@ def pdf_to_word(filename):
     cv.close()
     return word_filename
 
+def jpg_to_webp(filename):
+    webp_filename = f"{filename.removesuffix('.jpg')}.webp"
+    ruta_intermedia = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'])
+
+    input_path = os.path.join( ruta_intermedia, filename)
+    output_path = os.path.join( ruta_intermedia, webp_filename)
+
+    imagen = Image.open(input_path)
+    imagen.save(output_path, "WEBP")
+    
+    return webp_filename
+
 
 def upload_to_server(file,option):
     if file and allowed_file(file.filename):
@@ -48,3 +60,6 @@ def upload_to_server(file,option):
         if option == 1:
             word_filename = pdf_to_word(filename)
             return word_filename
+        if option == 2:
+            webp_filename = jpg_to_webp(filename)
+            return webp_filename

@@ -12,7 +12,7 @@ document.getElementById('dropzone').addEventListener('drop', function(e) {
     let file = e.dataTransfer.files[0];
     if (file) {
         document.getElementById('fileInput').files = e.dataTransfer.files;
-        document.getElementById('dropzone').innerText = "Archivo seleccionado: " + file.name;
+        document.getElementById('dropzone').innerHTML = "Archivo seleccionado: " + "<b>"+ file.name + "</b>";
     }
 });
 
@@ -24,6 +24,6 @@ document.getElementById('dropzone').addEventListener('click', function() {
 // Evento al seleccionar un archivo usando el input de archivos
 document.getElementById('fileInput').addEventListener('change', function() {
     if (this.files.length > 0) {
-        document.getElementById('dropzone').innerText = "Archivo seleccionado: " + this.files[0].name;
+        document.getElementById('dropzone').innerHTML = "Archivo seleccionado: " + "<b>" + this.files[0].name + "</b>";
     }
 });

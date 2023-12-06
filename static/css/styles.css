@@ -9,11 +9,11 @@ body {
 }
 
 .content {
-    flex: 1; /* Esta clase se aplica a todo el contenido de la página excepto al footer */
+    flex: 1;
 }
 
 .footer {
-    padding-bottom: 50px; /* Ajusta esto según tus necesidades */
+    padding-bottom: 50px;
 }
 
 .card:hover, .img_mod:hover{
@@ -30,8 +30,23 @@ a.card_mod{
     color: black !important;
 }
 
+.imgLogoFuncion{
+    max-width: 50%;
+    max-height: 240px;
+}
+
+#progressContainer{
+    width: 60%;
+}
+
+.espacio10{
+    clear: both;
+    height: 20px;
+}
+
 .espacio20{
     clear: both;
     height: 50px;
 }
+
 

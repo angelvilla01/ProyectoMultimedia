@@ -2,7 +2,7 @@ import subprocess
 import sys
 
 # Lista de bibliotecas a instalar
-libraries = ["werkzeug", "pdf2docx", "flask", "reportlab", "pillow"]
+libraries = ["flask", "werkzeug", "pdf2docx", "Pillow"]
 
 # Función para instalar cada biblioteca
 def install(library):

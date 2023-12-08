@@ -41,8 +41,19 @@ Por último, para descargar el fichero, el botón de descarga no se habilita has
 
 ## Manual de Usuario
 
+Para poder ejecutar el proyecto es importante seguir las siguientes instrucciones, pero antes, vamos a comentar los requisitos.
+Requisitos:
+1.	Instalar <b>Python 3.12.0</b>
+2.	Ejecutar en el CMD (símbolo del sistema) en modo administrador. ¿Por qué en modo administrador? -> suele dar error al instalar nuevos paquetes en Python al no tener permiso.
+a.	Nos dirigimos mediante el comando “cd” al directorio donde esté el proyecto y ejecutamos “python instalador.py”, nos instalará todos los paquetes/librerías necesarias.
+3.	Para poder usar el componente de compresor de vídeo, necesitamos extraer del .zip proporcionado el FFMPEG, lo más sencillo es extraer la carpeta en el disco C. Posteriormente en las variables de entorno del sistema, como se indica a continuación añadiremos la ruta de la carpeta (/bin) para que pueda ser detectada por el sistema.
 
+![image](https://github.com/angelvilla01/ProyectoMultimedia/assets/47080025/48a56992-0f61-4436-b7ca-2d0bccb931c9)
 
+<b>Ejecución</b>: <br>
+🔹	Recomendable: ejecutarlo en visual studio code mediante la terminal con el comando:  `python app.py` <br>
+🔹	Una vez ejecutado accederemos a la dirección:	`http://127.0.0.1:5000` <br>
+🔹 En la terminal también se indica la dirección
 
 
  

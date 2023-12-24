@@ -13,6 +13,7 @@ document.getElementById('dropzone').addEventListener('drop', function(e) {
     if (file) {
         document.getElementById('fileInput').files = e.dataTransfer.files;
         document.getElementById('dropzone').innerHTML = "Archivo seleccionado: " + "<b>"+ file.name + "</b>";
+        $('#submitBtn').prop('disabled', false);
     }
 });
 
@@ -25,5 +26,6 @@ document.getElementById('dropzone').addEventListener('click', function() {
 document.getElementById('fileInput').addEventListener('change', function() {
     if (this.files.length > 0) {
         document.getElementById('dropzone').innerHTML = "Archivo seleccionado: " + "<b>" + this.files[0].name + "</b>";
+        $('#submitBtn').prop('disabled', false);
     }
 });
